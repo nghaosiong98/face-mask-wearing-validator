@@ -1,4 +1,4 @@
-verson: '1'
+version: '1'
 
 services:
   flask_app:
