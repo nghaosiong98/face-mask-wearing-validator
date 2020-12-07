@@ -1,0 +1,23 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <value>
+          <list size="10">
+            <item index="0" class="java.lang.String" itemvalue="keras" />
+            <item index="1" class="java.lang.String" itemvalue="imgaug" />
+            <item index="2" class="java.lang.String" itemvalue="aws-cdk.aws_elasticloadbalancingv2" />
+            <item index="3" class="java.lang.String" itemvalue="aws-cdk.aws_ecs_patterns" />
+            <item index="4" class="java.lang.String" itemvalue="aws-cdk.aws-autoscaling-common" />
+            <item index="5" class="java.lang.String" itemvalue="aws-cdk.aws_ssm" />
+            <item index="6" class="java.lang.String" itemvalue="aws-cdk.core" />
+            <item index="7" class="java.lang.String" itemvalue="aws-cdk.aws_ec2" />
+            <item index="8" class="java.lang.String" itemvalue="aws-cdk.aws_ecs" />
+            <item index="9" class="java.lang.String" itemvalue="aws-cdk.aws_elasticache" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
