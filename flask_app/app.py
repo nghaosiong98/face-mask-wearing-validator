@@ -6,19 +6,19 @@ import cv2
 import numpy as np
 import os
 import werkzeug
-import argparse
+# import argparse
 
-ap = argparse.ArgumentParser()
-ap.add_argument("-f", "--face", type=str,
-                default="face_detector",
-                help="path to face detector model directory")
-ap.add_argument("-m", "--model", type=str,
-                default="mask_classification_model",
-                help="path to trained face mask detector model")
-ap.add_argument("-c", "--confidence", type=float,
-                default=0.5,
-                help="minimum probability to filter weak detections")
-args = vars(ap.parse_args())
+# ap = argparse.ArgumentParser()
+# ap.add_argument("-f", "--face", type=str,
+#                 default="face_detector",
+#                 help="path to face detector model directory")
+# ap.add_argument("-m", "--model", type=str,
+#                 default="mask_classification_model",
+#                 help="path to trained face mask detector model")
+# ap.add_argument("-c", "--confidence", type=float,
+#                 default=0.5,
+#                 help="minimum probability to filter weak detections")
+# args = vars(ap.parse_args())
 
 
 class Predict(Resource):
@@ -27,9 +27,9 @@ class Predict(Resource):
         parser.add_argument("image", type=werkzeug.datastructures.FileStorage, location='files')
         self.req_parser = parser
 
-        self.model = load_model(args['model'])
-        prototxt_path = os.path.sep.join([args["face"], "deploy.prototxt.txt"])
-        weight_path = os.path.sep.join([args["face"], "res10_300x300_ssd_iter_140000.caffemodel"])
+        self.model = load_model('mask_classification_model')
+        prototxt_path = os.path.sep.join(['face_detector', "deploy.prototxt.txt"])
+        weight_path = os.path.sep.join(['face_detector', "res10_300x300_ssd_iter_140000.caffemodel"])
         self.face_net = cv2.dnn.readNet(prototxt_path, weight_path)
 
     def detect_face(self, image):
@@ -40,7 +40,7 @@ class Predict(Resource):
         detections = self.face_net.forward()
         for i in range(0, detections.shape[2]):
             confidence = detections[0, 0, i, 2]
-            if confidence > args['confidence']:
+            if confidence > 0.7:
                 box = detections[0, 0, i, 3:7] * np.array([w, h, w, h])
                 (startX, startY, endX, endY) = box.astype("int")
 
@@ -78,10 +78,16 @@ class Predict(Resource):
             return "Failed"
 
 
-app = Flask(__name__)
-api = Api(app)
+class Home(Resource):
+    def get(self):
+        return "Hello, welcome to Mask Wearing Validator"
+
+
+server = Flask(__name__)
+api = Api(server)
 
 api.add_resource(Predict, '/predict')
+api.add_resource(Home, '/')
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True)
+# if __name__ == '__main__':
+#     app.run(host='0.0.0.0', debug=True)

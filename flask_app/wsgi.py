@@ -1,4 +1,4 @@
-from flask_app.app import app
+from app import server
 
 if __name__ == '__main__':
-    app.run()
+    server.run(host='0.0.0.0', port=8000)
